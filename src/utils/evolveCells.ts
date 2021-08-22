@@ -3,15 +3,18 @@ import getCell from './getCell';
 
 // Returns the the number of live neighbours at a set of given coordinates
 export function countLiveNeighbours({ x, y, cells }: Coords): number {
-  // Possible x and y coords for neighbouring cells
-  const rows = [y - 1, y, y + 1];
-  const cols = [x - 1, x, x + 1];
+  // Return zero neighbours if cell is out of bounds
+  if (getCell({ x, y, cells }) === null) {
+    return 0;
+  }
 
-  // Add neighbouring coords for cells on edge of board
-  // TODO: edge logic
-  // if (y === 0) {
-  //   rows.push(cells.length)
-  // }
+  // Possible x and y coords for neighbouring cells.
+  // Cells at the edges of the game board will include coordinates at the
+  // opposite end of the game board as neighbouring cells.
+  const maxRows = cells.length - 1;
+  const maxCols = cells[0].length - 1;
+  const rows = [y > 0 ? y - 1 : maxRows, y, y < maxRows ? y + 1 : 0];
+  const cols = [x > 0 ? x - 1 : maxCols, x, x < maxCols ? x + 1 : 0];
 
   const liveNeighbours: Array<BoardCell> = [];
 

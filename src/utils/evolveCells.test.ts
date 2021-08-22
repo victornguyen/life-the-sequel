@@ -32,19 +32,58 @@ describe('evolveCells()', () => {
   });
 
   describe('countLiveNeighbours()', () => {
-    const cells = [
-      [true, false, false, false, false, false, false],
-      [false, true, true, false, false, false, false],
-      [false, false, true, false, false, false, false],
-    ];
-
     it('returns the correct number of live neighbours of a given cell', () => {
-      expect(countLiveNeighbours({ x: 1, y: 1, cells })).toEqual(3);
-      expect(countLiveNeighbours({ x: 1, y: 5, cells })).toEqual(0);
-      expect(countLiveNeighbours({ x: 10000, y: 2000, cells })).toEqual(0);
+      // 3 neighbours
+      expect(
+        countLiveNeighbours({
+          x: 1,
+          y: 1,
+          cells: [
+            [true, false, false],
+            [true, false, false],
+            [true, false, false],
+          ],
+        })
+      ).toEqual(3);
 
-      // TODO: account for wrapping neighbours at board edges
-      expect(countLiveNeighbours({ x: 0, y: 0, cells })).toEqual(1);
+      // 0 neighbours
+      expect(
+        countLiveNeighbours({
+          x: 1,
+          y: 1,
+          cells: [
+            [false, false, false],
+            [false, false, false],
+            [false, false, false],
+          ],
+        })
+      ).toEqual(0);
+
+      // 0 neighbours if cell is out of bounds
+      expect(
+        countLiveNeighbours({
+          x: 10000,
+          y: 2000,
+          cells: [
+            [true, false, false],
+            [true, false, false],
+            [true, false, false],
+          ],
+        })
+      ).toEqual(0);
+
+      // Count live neighbours at wrapped edges
+      expect(
+        countLiveNeighbours({
+          x: 0,
+          y: 0,
+          cells: [
+            [false, false, false, true],
+            [false, false, false, false],
+            [false, false, false, false],
+          ],
+        })
+      ).toEqual(1);
     });
   });
 
