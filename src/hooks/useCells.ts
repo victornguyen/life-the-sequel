@@ -7,18 +7,18 @@ import { Board } from '../types/board';
 interface UseCells {
   cells: Board;
   evolve: () => void;
-  generate: () => void;
+  randomise: () => void;
   reset: () => void;
   setCells: React.Dispatch<SetStateAction<Board>>;
   toggle: (x: number, y: number) => void;
 }
 
 export default function useCells(
-  initialCells = generateCells({ random: true })
+  initialCells = generateCells({ random: false })
 ): UseCells {
   const [cells, setCells] = useState<Board>(initialCells);
 
-  const generate = (): void => {
+  const randomise = (): void => {
     setCells(generateCells({ random: true }));
   };
 
@@ -43,7 +43,7 @@ export default function useCells(
   return {
     cells,
     evolve,
-    generate,
+    randomise,
     reset,
     setCells,
     toggle,

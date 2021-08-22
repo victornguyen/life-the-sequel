@@ -19,7 +19,7 @@ const AppStyles = styled.div`
 const App = (): JSX.Element => {
   const [evolving, setEvolving] = useState(false);
   const [rate, setRate] = useState(RATE);
-  const { cells, evolve, generate, reset, setCells, toggle } = useCells();
+  const { cells, evolve, randomise, reset, setCells, toggle } = useCells();
 
   useInterval(() => {
     if (evolving) {
@@ -40,12 +40,12 @@ const App = (): JSX.Element => {
 
   const newGame = useCallback((): void => {
     stop();
-    generate();
+    reset();
   }, []);
 
-  const resetGame = useCallback((): void => {
+  const randomGame = useCallback((): void => {
     stop();
-    reset();
+    randomise();
   }, []);
 
   const loadExample = useCallback(() => {
@@ -63,14 +63,14 @@ const App = (): JSX.Element => {
   return (
     <AppStyles>
       <h1>The Game of Life II: Judgement Day 🤖</h1>
-      <p>💡 Tip: you can click on a cell to (un)kill it.</p>
+      <p>💡 Click cells to kill/awaken them.</p>
       <Board cells={cells} toggle={toggle} />
       <Controls>
         <Button type="button" onClick={newGame}>
-          New game
+          Reset
         </Button>
-        <Button type="button" onClick={resetGame}>
-          Reset game
+        <Button type="button" onClick={randomGame}>
+          Randomise
         </Button>
         <Button type="button" onClick={loadExample}>
           Load example
