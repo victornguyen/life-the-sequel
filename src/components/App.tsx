@@ -6,8 +6,11 @@ import Board from './Board';
 import Button from './Button';
 import Slider from './Slider';
 import { RATE } from '../constants/config';
+import example from '../data/example';
 
-const Controls = styled.div``;
+const Controls = styled.div`
+  margin-bottom: 10px;
+`;
 
 const AppStyles = styled.div`
   text-align: center;
@@ -16,7 +19,7 @@ const AppStyles = styled.div`
 const App = (): JSX.Element => {
   const [evolving, setEvolving] = useState(false);
   const [rate, setRate] = useState(RATE);
-  const { cells, evolve, generate, reset, toggle } = useCells();
+  const { cells, evolve, generate, reset, setCells, toggle } = useCells();
 
   useInterval(() => {
     if (evolving) {
@@ -45,6 +48,11 @@ const App = (): JSX.Element => {
     reset();
   }, []);
 
+  const loadExample = useCallback(() => {
+    stop();
+    setCells(example(6));
+  }, []);
+
   const changeRate = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>): void => {
       setRate(parseInt(e.target.value));
@@ -63,16 +71,23 @@ const App = (): JSX.Element => {
         <Button type="button" onClick={resetGame}>
           Reset game
         </Button>
+        <Button type="button" onClick={loadExample}>
+          Load example
+        </Button>
+      </Controls>
+      <Controls>
         <Button type="button" onClick={evolve} disabled={evolving}>
           Next generation
         </Button>
-        <Button
-          type="button"
-          onClick={evolving ? stop : start}
-          theme={evolving ? 'stop' : 'normal'}
-        >
-          {evolving ? 'Stop evolving' : 'Start evolution'}
-        </Button>
+        {evolving ? (
+          <Button type="button" onClick={stop} theme="stop">
+            Stop evolution
+          </Button>
+        ) : (
+          <Button type="button" onClick={start}>
+            Start evolution
+          </Button>
+        )}
         <Slider
           id="rate"
           label="Evo speed"

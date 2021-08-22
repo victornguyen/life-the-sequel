@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { SetStateAction, useState } from 'react';
 import evolveCells from '../utils/evolveCells';
 import generateCells from '../utils/generateCells';
 import toggleCell from '../utils/toggleCell';
@@ -9,6 +9,7 @@ interface UseCells {
   evolve: () => void;
   generate: () => void;
   reset: () => void;
+  setCells: React.Dispatch<SetStateAction<Board>>;
   toggle: (x: number, y: number) => void;
 }
 
@@ -44,6 +45,7 @@ export default function useCells(
     evolve,
     generate,
     reset,
+    setCells,
     toggle,
   };
 }
