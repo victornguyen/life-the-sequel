@@ -7,7 +7,7 @@ const ButtonStyles = styled.button<{ theme: ThemeOption }>`
   display: inline-block;
   color: #fff;
   text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
-  min-width: 120px;
+  min-width: 160px;
   border: 0;
   outline: 0;
   border-radius: 4px;
@@ -23,10 +23,15 @@ const ButtonStyles = styled.button<{ theme: ThemeOption }>`
   &:active {
     background: ${({ theme }) => buttonThemes[theme as ThemeOption].active};
   }
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
 `;
 
 interface ButtonProps {
   children: React.ReactNode;
+  disabled?: boolean;
   onClick: () => void;
   theme?: ThemeOption;
 }
@@ -35,11 +40,17 @@ type Props = ButtonProps & React.HTMLProps<HTMLButtonElement>;
 
 const Button = ({
   children,
+  disabled = false,
   onClick,
   theme = 'normal',
 }: Props): JSX.Element => {
   return (
-    <ButtonStyles type="button" onClick={onClick} theme={theme}>
+    <ButtonStyles
+      disabled={disabled}
+      onClick={onClick}
+      theme={theme}
+      type="button"
+    >
       {children}
     </ButtonStyles>
   );
