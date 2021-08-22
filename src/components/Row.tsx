@@ -10,13 +10,15 @@ const RowStyles = styled.div`
 
 interface Props {
   row: BoardRow;
+  toggle: (x: number, y: number) => void;
+  y: number;
 }
 
-const Row = ({ row }: Props): JSX.Element => {
+const Row = ({ row, toggle, y }: Props): JSX.Element => {
   return (
     <RowStyles>
       {row.map((isAlive, x) => (
-        <Cell isAlive={isAlive} key={x} />
+        <Cell isAlive={isAlive} key={x} toggle={toggle} x={x} y={y} />
       ))}
     </RowStyles>
   );

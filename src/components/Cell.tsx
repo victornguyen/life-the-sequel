@@ -14,10 +14,14 @@ const CellStyles = styled.div<{ isAlive: boolean }>`
 
 interface Props {
   isAlive: boolean;
+  toggle: (x: number, y: number) => void;
+  x: number;
+  y: number;
 }
 
-const Cell = ({ isAlive }: Props): JSX.Element => {
-  return <CellStyles isAlive={isAlive} />;
+const Cell = ({ isAlive, toggle, x, y }: Props): JSX.Element => {
+  const handleToggle = () => toggle(x, y);
+  return <CellStyles isAlive={isAlive} onClick={handleToggle} />;
 };
 
 export default Cell;

@@ -1,28 +1,43 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Board } from '../types/board';
+import evolveCells from '../utils/evolveCells';
 import generateCells from '../utils/generateCells';
+import toggleCell from '../utils/toggleCell';
 
 interface UseCells {
   cells: Board;
   newGame: () => void;
   clearCells: () => void;
+  evolve: () => void;
+  toggle: (x: number, y: number) => void;
 }
 
-export default function useCells(): UseCells {
-  const [cells, setBoard] = useState<Board>(generateCells({ random: true }));
-
-  // Set initial board
-  useEffect(() => {
-    setBoard(cells);
-  }, []);
+export default function useCells(
+  initialCells = generateCells({ random: true })
+): UseCells {
+  const [cells, setCells] = useState<Board>(initialCells);
 
   const newGame = (): void => {
-    setBoard(generateCells({ random: true }));
+    setCells(generateCells({ random: true }));
   };
 
   const clearCells = (): void => {
-    setBoard(generateCells({ random: false }));
+    setCells(generateCells({ random: false }));
   };
 
-  return { cells, newGame, clearCells };
+  const evolve = (): void => {
+    setCells(evolveCells(cells));
+  };
+
+  const toggle = (x: number, y: number): void => {
+    setCells(
+      toggleCell({
+        x,
+        y,
+        cells,
+      })
+    );
+  };
+
+  return { cells, newGame, clearCells, evolve, toggle };
 }

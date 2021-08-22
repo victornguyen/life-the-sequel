@@ -11,17 +11,20 @@ const AppStyles = styled.div`
 `;
 
 const App = (): JSX.Element => {
-  const { cells, newGame, clearCells } = useCells();
+  const { cells, newGame, clearCells, evolve, toggle } = useCells();
   return (
     <AppStyles>
       <h1>The Game of Life II: Judgement Day 🤖</h1>
-      <Board cells={cells} />
+      <Board cells={cells} toggle={toggle} />
       <Controls>
         <Button type="button" onClick={newGame}>
           New game
         </Button>
         <Button type="button" onClick={clearCells}>
           Clear
+        </Button>
+        <Button type="button" onClick={evolve}>
+          Evolve
         </Button>
       </Controls>
     </AppStyles>
