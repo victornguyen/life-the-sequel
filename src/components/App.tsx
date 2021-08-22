@@ -1,9 +1,11 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
+import useInterval from '../hooks/useInterval';
 import useCells from '../hooks/useCells';
 import Board from './Board';
 import Button from './Button';
 import Slider from './Slider';
+import { RATE } from '../constants/config';
 
 const Controls = styled.div``;
 
@@ -12,20 +14,38 @@ const AppStyles = styled.div`
 `;
 
 const App = (): JSX.Element => {
-  const {
-    cells,
-    clearCells,
-    evolve,
-    newGame,
-    toggle,
-    evolving,
-    start,
-    stop,
-    rate,
-    setRate,
-  } = useCells();
+  const [evolving, setEvolving] = useState(false);
+  const [rate, setRate] = useState(RATE);
+  const { cells, evolve, generate, reset, toggle } = useCells();
 
-  const handleRateChange = useCallback(
+  useInterval(() => {
+    if (evolving) {
+      evolve();
+    }
+  }, rate);
+
+  const stop = useCallback((): void => {
+    setEvolving(false);
+  }, []);
+
+  const start = useCallback((): void => {
+    if (!evolving) {
+      setEvolving(true);
+    }
+    evolve();
+  }, [evolving, cells]);
+
+  const newGame = useCallback((): void => {
+    stop();
+    generate();
+  }, []);
+
+  const resetGame = useCallback((): void => {
+    stop();
+    reset();
+  }, []);
+
+  const changeRate = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>): void => {
       setRate(parseInt(e.target.value));
     },
@@ -40,8 +60,8 @@ const App = (): JSX.Element => {
         <Button type="button" onClick={newGame}>
           New game
         </Button>
-        <Button type="button" onClick={clearCells}>
-          Clear
+        <Button type="button" onClick={resetGame}>
+          Reset game
         </Button>
         <Button type="button" onClick={evolve} disabled={evolving}>
           Next generation
@@ -58,7 +78,7 @@ const App = (): JSX.Element => {
           label="Evo speed"
           max={500}
           min={40}
-          onChange={handleRateChange}
+          onChange={changeRate}
           step={20}
           value={rate}
         />
