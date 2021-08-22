@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/life-the-sequel/static/js/main.585fbd89.chunk.js",
-    "main.js.map": "/life-the-sequel/static/js/main.585fbd89.chunk.js.map",
+    "main.js": "/life-the-sequel/static/js/main.6d65d720.chunk.js",
+    "main.js.map": "/life-the-sequel/static/js/main.6d65d720.chunk.js.map",
     "runtime-main.js": "/life-the-sequel/static/js/runtime-main.5b8c2d60.js",
     "runtime-main.js.map": "/life-the-sequel/static/js/runtime-main.5b8c2d60.js.map",
     "static/js/2.ceae7574.chunk.js": "/life-the-sequel/static/js/2.ceae7574.chunk.js",
@@ -14,6 +14,6 @@
   "entrypoints": [
     "static/js/runtime-main.5b8c2d60.js",
     "static/js/2.ceae7574.chunk.js",
-    "static/js/main.585fbd89.chunk.js"
+    "static/js/main.6d65d720.chunk.js"
   ]
 }
