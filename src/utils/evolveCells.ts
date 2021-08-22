@@ -16,28 +16,28 @@ export function countLiveNeighbours({ x, y, cells }: Coords): number {
   const rows = [y > 0 ? y - 1 : maxRows, y, y < maxRows ? y + 1 : 0];
   const cols = [x > 0 ? x - 1 : maxCols, x, x < maxCols ? x + 1 : 0];
 
-  const liveNeighbours: Array<BoardCell> = [];
+  const liveNeighbours: BoardCell[] = [];
 
   // For each possible neighbouring row coordinate...
-  rows.forEach((yPoint) => {
+  for (const possibleY of rows) {
     // ... check each possible neighbouring column coordinate
-    cols.forEach((xPoint) => {
+    for (const possibleX of cols) {
       // Ignore if it's the actual cell we're trying to find neighbours of
-      const isSubjectCell = xPoint === x && yPoint === y;
+      const isSubjectCell = possibleX === x && possibleY === y;
       if (isSubjectCell) {
-        return;
+        continue;
       }
 
       // Ignore if the neighbour isn't alive or doesn't exist
-      const neighbour = getCell({ x: xPoint, y: yPoint, cells });
+      const neighbour = getCell({ x: possibleX, y: possibleY, cells });
       if (neighbour !== true) {
-        return;
+        continue;
       }
 
       // Otherwise push to live neighbours array
       liveNeighbours.push(neighbour);
-    });
-  });
+    }
+  }
 
   return liveNeighbours.length;
 }
