@@ -5,8 +5,6 @@ import { BoardRow } from '../types/board';
 
 const BoardStyles = styled.div`
   display: inline-block;
-  border: 1px solid #c2dfd5;
-  border-radius: 3px;
   margin: 10px 0 30px;
 `;
 
