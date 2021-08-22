@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 
 const CellStyles = styled.div<{ isAlive: boolean }>`
