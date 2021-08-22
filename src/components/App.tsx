@@ -63,6 +63,7 @@ const App = (): JSX.Element => {
   return (
     <AppStyles>
       <h1>The Game of Life II: Judgement Day 🤖</h1>
+      <p>💡 Tip: you can click on a cell to (un)kill it.</p>
       <Board cells={cells} toggle={toggle} />
       <Controls>
         <Button type="button" onClick={newGame}>
